@@ -18,7 +18,6 @@ async function query(filterBy) {
 
     const collection = await dbService.getCollection('task')
     var tasks = await collection.find(criteria).toArray()
-    console.log('tasks', tasks);
     return tasks
   } catch (err) {
     logger.error('cannot find tasks', err)
@@ -91,11 +90,11 @@ async function update(task) {
 
 function _buildCriteria(filterBy) {
   const criteria = {}
-
+  console.log('filterBy', filterBy);
   // by name
-  if (filterBy.name) {
-    const regex = new RegExp(filterBy.name, 'i')
-    criteria.name = { $regex: regex }
+  if (filterBy.txt) {
+    const regex = new RegExp(filterBy.txt, 'i')
+    criteria.title = { $regex: regex } // need to be the key name
   }
 
   // filter by inStock
