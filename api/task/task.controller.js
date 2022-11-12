@@ -1,5 +1,6 @@
 const logger = require('../../services/logger.service')
 const taskService = require('./task.service')
+const cloudinary = require('cloudinary');
 
 module.exports = {
   getTasks,
@@ -48,7 +49,6 @@ async function getTaskByUserId(req, res) {
 async function addTask(req, res) {
   try {
     const task = req.body
-    console.log('add', task);
     const addedTask = await taskService.add(task)
     res.json(addedTask)
   } catch (err) {
@@ -73,6 +73,10 @@ async function updateTask(req, res) {
 async function removeTask(req, res) {
   try {
     const { id } = req.params
+    const { publicVideoId } = req.body
+    cloudinary.v2.uploader
+      .destroy(publicVideoId, { resource_type: 'video' })
+      .then(result => console.log(result));
     const removedId = await taskService.remove(id)
     res.send(removedId)
   } catch (err) {

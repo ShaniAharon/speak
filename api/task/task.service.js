@@ -49,6 +49,7 @@ async function getByUserId(id) {
 async function remove(taskId) {
   try {
     const collection = await dbService.getCollection('task')
+
     await collection.deleteOne({ _id: ObjectId(taskId) })
     return taskId
   } catch (err) {

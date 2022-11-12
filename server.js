@@ -3,11 +3,20 @@ const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 require('dotenv').config();
+// Require the cloudinary library
+const cloudinary = require('cloudinary').v2;
 
 
 const app = express()
 // const http = require('http').createServer(app)
 
+// Return "https" URLs by setting secure: true
+cloudinary.config({
+  secure: true
+});
+
+// Log the configuration
+console.log(cloudinary.config());
 // Express App Config
 app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))
